@@ -2,6 +2,7 @@ package moj.lukeejay.challenge;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import moj.lukeejay.challenge.products.Product;
 import moj.lukeejay.challenge.products.services.ConstantProductService;
@@ -33,7 +34,7 @@ public class Checkout {
     /**
      * Starts the checkout program
      */
-    public void start() {
+    public void startScanning() {
 
             while( true ) {
 
@@ -53,8 +54,23 @@ public class Checkout {
 
                 }
             }
+    }
 
-            System.out.println( basket );
+
+    /**
+     * Calculate total spend of the checkout
+     * @param checkoutBasket the basket of products
+     * @return the amount of money spent in pounds
+     */
+    private double calculateTotalSpend( Map<Product, Integer> checkoutBasket ) {
+        
+        double totalSpend = 0;
+        
+        for( Entry<Product, Integer> basketItem : checkoutBasket.entrySet() ) {
+            totalSpend += basketItem.getKey().getProductPrice() * basketItem.getValue();
+        }
+
+        return totalSpend;
     }
 
     /**
@@ -63,7 +79,7 @@ public class Checkout {
      * @param code the product code
      * @return the product if found or null
      */
-    private Product readProductCode(String code) {
+    private Product readProductCode( String code ) {
         
         Product scannedProduct = productService.getProductFromCode( code );
         
@@ -75,12 +91,24 @@ public class Checkout {
         
     }
 
+    public double calculateTotal() {
+        
+        double totalSpend = calculateTotalSpend( basket );
 
+        //Subtract Offers
+
+        System.out.println( "Total Spend was : £" + totalSpend );
+
+        return totalSpend;
+    }
 
     public static void main( String[] args ) {
 
         Checkout checkout = new Checkout( new ConstantProductService(), new SystemInScanner() );
-        checkout.start();
+        checkout.startScanning();
+        checkout.calculateTotal();
         
     }
+
+
 }
