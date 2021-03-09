@@ -11,9 +11,9 @@ import moj.lukeejay.challenge.products.ProductImpl;
  */
 public class ConstantProductService implements ProductService {
 
-    private static final Product FRUIT_TEA = new ProductImpl( "FR1", "Fruit Tea", 3.11 );
-    private static final Product STRAWBERRIES = new ProductImpl( "SR1", "Strawberries", 5.00 );
-    private static final Product COFFEE = new ProductImpl( "CF1", "Coffee", 11.23 );
+    public static final Product FRUIT_TEA = new ProductImpl( "FR1", "Fruit Tea", 3.11 );
+    public static final Product STRAWBERRIES = new ProductImpl( "SR1", "Strawberries", 5.00 );
+    public static final Product COFFEE = new ProductImpl( "CF1", "Coffee", 11.23 );
 
     private Map<String, Product> products = new HashMap<>();
 

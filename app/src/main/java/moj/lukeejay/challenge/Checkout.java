@@ -51,7 +51,7 @@ public class Checkout {
                         break;
                     }
 
-                    Product scannedProduct = readProductCode( scannedProductCode );
+                    Product scannedProduct = lookupProductCode( scannedProductCode );
 
                     if( scannedProduct!=null ) {
                         basket.computeIfPresent( scannedProduct , (key, value) -> value + 1 );
@@ -81,12 +81,12 @@ public class Checkout {
     }
 
     /**
-     * Reads the product code and gives an output to the user depending on the result
+     * Looks up the product code and outputs the corresponding {@link Product}
      * 
      * @param code the product code
      * @return the product if found or null
      */
-    private Product readProductCode( String code ) {
+    private Product lookupProductCode( String code ) {
         
         Product scannedProduct = productService.getProductFromCode( code );
         
