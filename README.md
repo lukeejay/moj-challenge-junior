@@ -1,5 +1,7 @@
 # moj-lukeejay-challenge
 
+## Running the Application
+
 To run the program use the following command  
 
 ```
@@ -24,5 +26,21 @@ Total Spend was : £13.50
 ```
 
 Displayed will be the amount saved per offer and the final total of the basket. 
+
+## Running Tests
+
+Tests can be run and status viewed by using:
+
+```
+gradle.bat clean test
+```
+
+## Running a Release
+
+The release should be run by extracting the zip folder and running either bin/app.bat or bin/app depending on the OS
+
+
+
+
 
 
