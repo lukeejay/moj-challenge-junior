@@ -101,4 +101,16 @@ public class ConstantOfferServiceTest {
 
         Assertions.assertEquals(FRUIT_TEA.getProductPrice() * -2 , offerAppliedTwice);
     }
+
+    @Test
+    public void bothOffersApplyTogether() {
+        basket.put(FRUIT_TEA, 4);
+        basket.put(STRAWBERRIES, 3);
+
+        double bothOffersApply = service.computeTotalOfferAmount(basket);
+
+        double expectedSavings = FRUIT_TEA.getProductPrice() * -2 - 1.50;
+
+        Assertions.assertEquals(expectedSavings, bothOffersApply);
+    }
 }
