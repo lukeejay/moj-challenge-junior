@@ -22,7 +22,7 @@ public class SystemInScanner implements moj.lukeejay.challenge.scanner.Scanner {
         
         String productCodeInput = null;
 
-        System.out.println( "Please input product code");
+        System.out.println( "Please input product code: ");
 
         productCodeInput = userInputScanner.next();
  

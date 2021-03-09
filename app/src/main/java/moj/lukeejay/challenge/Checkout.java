@@ -1,5 +1,8 @@
 package moj.lukeejay.challenge;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import moj.lukeejay.challenge.products.Product;
 import moj.lukeejay.challenge.products.services.ConstantProductService;
 import moj.lukeejay.challenge.products.services.ProductService;
@@ -14,7 +17,14 @@ public class Checkout {
 
     private final ProductService productService;
     private Scanner scanner;
+    private Map<Product, Integer> basket = new HashMap<>(); 
 
+    /**
+     * Constructor for the checkout program, injects the product service and the scanner
+     * 
+     * @param productService product service used to map scanned product codes to their product
+     * @param scanner the scanner to take an input of product codes
+     */
     public Checkout( ProductService productService, Scanner scanner ) {
         this.productService = productService;
         this.scanner = scanner;
@@ -30,19 +40,26 @@ public class Checkout {
                 String scannedProductCode = scanner.readProductCode();
                 if( scannedProductCode!=null ) {
 
-                    if( scannedProductCode.equalsIgnoreCase("exit") ){
+                    if( scannedProductCode.equalsIgnoreCase( "exit" ) || scannedProductCode.equalsIgnoreCase( "total" ) ){
                         break;
                     }
 
-                    readProductCode(scannedProductCode);
-                    
+                    Product scannedProduct = readProductCode( scannedProductCode );
+
+                    if( scannedProduct!=null ) {
+                        basket.computeIfPresent( scannedProduct , (key, value) -> value + 1 );
+                        basket.putIfAbsent( scannedProduct, 1 );
+                    }
 
                 }
             }
+
+            System.out.println( basket );
     }
 
     /**
      * Reads the product code and gives an output to the user depending on the result
+     * 
      * @param code the product code
      * @return the product if found or null
      */
@@ -50,10 +67,8 @@ public class Checkout {
         
         Product scannedProduct = productService.getProductFromCode( code );
         
-        if( scannedProduct!=null ){
-            System.out.println( scannedProduct.getProductName() );
-        } else {
-            System.err.println("Unknown product code entered: " + code);
+        if( scannedProduct==null ){
+            System.err.println( "Unknown product code entered: " + code );
         }
 
         return scannedProduct;
@@ -62,7 +77,7 @@ public class Checkout {
 
 
 
-    public static void main(String[] args) {
+    public static void main( String[] args ) {
 
         Checkout checkout = new Checkout( new ConstantProductService(), new SystemInScanner() );
         checkout.start();

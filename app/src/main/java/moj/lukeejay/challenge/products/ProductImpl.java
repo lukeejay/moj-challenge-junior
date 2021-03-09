@@ -69,4 +69,9 @@ public class ProductImpl implements Product {
     public void setProductPrice(double productPrice) {
         this.productPrice = productPrice;
     }
+
+    @Override
+    public String toString() {
+        return "ProductCode : " + productCode + " ProductName: " + productName + " ProductPrice: £" + productPrice + " ";
+    }
 }
