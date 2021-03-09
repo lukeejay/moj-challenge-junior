@@ -9,6 +9,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
+import moj.lukeejay.challenge.offers.services.OfferService;
 import moj.lukeejay.challenge.products.services.ConstantProductService;
 import moj.lukeejay.challenge.products.services.ProductService;
 import moj.lukeejay.challenge.scanner.Scanner;
@@ -24,6 +25,9 @@ public class CheckoutTest {
     @Mock
     ProductService mockProductService;
 
+    @Mock
+    OfferService offerService;
+
     private Checkout checkout;
 
     @BeforeEach
@@ -34,7 +38,7 @@ public class CheckoutTest {
     @Test
     public void checkoutCanScanUntilExit() {
 
-        this.checkout = new Checkout( mockProductService, scanner );
+        this.checkout = new Checkout( mockProductService, scanner, offerService);
 
         mockScannerInput( "CF1", "FR1", "SR1", "Exit" );
 
@@ -65,7 +69,7 @@ public class CheckoutTest {
 
     @Test 
     public void testTotalOfItemsWithNoOffer() {
-        this.checkout = new Checkout( new ConstantProductService(), scanner );
+        this.checkout = new Checkout( new ConstantProductService(), scanner, offerService );
 
         mockScannerInput( "CF1", "FR1", "SR1", "Exit" );
 
@@ -77,7 +81,7 @@ public class CheckoutTest {
 
     @Test
     public void testTotalOfMultipleSameItemsWithNoOffer() {
-        this.checkout = new Checkout( new ConstantProductService(), scanner );
+        this.checkout = new Checkout( new ConstantProductService(), scanner, offerService );
 
         mockScannerInput( "SR1", "SR1", "SR1", "SR1", "Exit" );
 

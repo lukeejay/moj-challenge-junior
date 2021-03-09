@@ -11,9 +11,9 @@ import moj.lukeejay.challenge.products.ProductImpl;
  */
 public class ConstantProductService implements ProductService {
 
-    private final Product fruitTea = new ProductImpl( "FR1", "Fruit Tea", 3.11 );
-    private final Product strawberries = new ProductImpl( "SR1", "Strawberries", 5.00 );
-    private final Product coffee = new ProductImpl( "CF1", "Coffee", 11.23 );
+    private static final Product FRUIT_TEA = new ProductImpl( "FR1", "Fruit Tea", 3.11 );
+    private static final Product STRAWBERRIES = new ProductImpl( "SR1", "Strawberries", 5.00 );
+    private static final Product COFFEE = new ProductImpl( "CF1", "Coffee", 11.23 );
 
     private Map<String, Product> products = new HashMap<>();
 
@@ -22,9 +22,9 @@ public class ConstantProductService implements ProductService {
      */
     public ConstantProductService(){
 
-        products.put( fruitTea.getProductCode(), fruitTea );
-        products.put( strawberries.getProductCode(), strawberries );
-        products.put( coffee.getProductCode(), coffee );
+        products.put( FRUIT_TEA.getProductCode(), FRUIT_TEA );
+        products.put( STRAWBERRIES.getProductCode(), STRAWBERRIES );
+        products.put( COFFEE.getProductCode(), COFFEE );
     
     }
 

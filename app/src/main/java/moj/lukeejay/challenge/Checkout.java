@@ -1,9 +1,12 @@
 package moj.lukeejay.challenge;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import moj.lukeejay.challenge.offers.services.ConstantOfferService;
+import moj.lukeejay.challenge.offers.services.OfferService;
 import moj.lukeejay.challenge.products.Product;
 import moj.lukeejay.challenge.products.services.ConstantProductService;
 import moj.lukeejay.challenge.products.services.ProductService;
@@ -18,17 +21,20 @@ public class Checkout {
 
     private final ProductService productService;
     private Scanner scanner;
-    private Map<Product, Integer> basket = new HashMap<>(); 
+    private Map<Product, Integer> basket = new HashMap<>();
+    private OfferService offerService; 
 
     /**
      * Constructor for the checkout program, injects the product service and the scanner
      * 
      * @param productService product service used to map scanned product codes to their product
      * @param scanner the scanner to take an input of product codes
+     * @param offerService the offer service to give available offers
      */
-    public Checkout( ProductService productService, Scanner scanner ) {
+    public Checkout( ProductService productService, Scanner scanner, OfferService offerService ) {
         this.productService = productService;
         this.scanner = scanner;
+        this.offerService = offerService;
     }
 
     /**
@@ -59,6 +65,7 @@ public class Checkout {
 
     /**
      * Calculate total spend of the checkout
+     * 
      * @param checkoutBasket the basket of products
      * @return the amount of money spent in pounds
      */
@@ -91,20 +98,31 @@ public class Checkout {
         
     }
 
+    /**
+     * Calculates the final total of the shop
+     * 
+     * @return the final total in pounds
+     */
     public double calculateTotal() {
         
-        double totalSpend = calculateTotalSpend( basket );
+        double totalSpend = 0;
 
-        //Subtract Offers
+        double subTotal = calculateTotalSpend( basket );
 
-        System.out.println( "Total Spend was : £" + totalSpend );
+        double offerAmount = offerService.computeTotalOfferAmount(basket);
+
+        totalSpend = subTotal + offerAmount;
+
+        DecimalFormat currencyFormat = new DecimalFormat("0.00");
+
+        System.out.println( "Total Spend was : £" + currencyFormat.format( totalSpend ) );
 
         return totalSpend;
     }
 
     public static void main( String[] args ) {
 
-        Checkout checkout = new Checkout( new ConstantProductService(), new SystemInScanner() );
+        Checkout checkout = new Checkout( new ConstantProductService(), new SystemInScanner(), new ConstantOfferService() );
         checkout.startScanning();
         checkout.calculateTotal();
         
