@@ -40,6 +40,33 @@ gradle.bat clean test
 The release should be run by extracting the zip folder and running either bin/app.bat or bin/app depending on the OS
 
 
+## My approach
+
+There are 4 main elements to the program 
+
+### Checkout
+
+The checkout is constructed with a ScannerService, ProductService and OfferService
+
+The checkout holds the basket map which maps a list of Products to the amount of times they have occured
+
+The checkout uses the ScannerService to scan items (in this case the user input) 
+
+It uses the ProductService to then lookup the product code scanned and get the correct Product object
+
+It then uses the offer service to calculate any offers that should applied on the final basket and outputs the final cost.
+
+### Product Service
+
+The ProductService allows products to be looked up by their product code in this implenentation the products are just set by constants in the code.
+
+### Scanner
+
+The Scanner is the input component and the main way the user will interact with the program (in this case it is just a wrapper around a System.in scanner)  
+
+### Offer Service
+
+The OfferService will calculate the total discount applied by a set of offers. In this implementation the offers are set by constants in the code. 
 
 
 
