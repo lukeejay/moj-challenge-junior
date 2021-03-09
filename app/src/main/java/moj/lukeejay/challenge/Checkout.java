@@ -115,7 +115,7 @@ public class Checkout {
 
         DecimalFormat currencyFormat = new DecimalFormat("0.00");
 
-        System.out.println( "Total Spend was : £" + currencyFormat.format( totalSpend ) );
+        System.out.println( "Total Spend was : \u00A3" + currencyFormat.format( totalSpend ) );
 
         return totalSpend;
     }

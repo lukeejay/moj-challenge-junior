@@ -51,7 +51,7 @@ public class ConstantOfferService implements OfferService {
         for ( Offer offer : availableOffers ) {
             double offerReduced = offer.getTotalDiscount( basket );
             if( offerReduced < 0 ) {
-                System.out.println( "Offer name: " + offer.getOfferName() + " -£" + CURRENCY_FORMAT.format( offerReduced * - 1 ) );
+                System.out.println( "Offer name: " + offer.getOfferName() + " -\u00A3" + CURRENCY_FORMAT.format( offerReduced * - 1 ) );
             }
 
             basketReduction += offerReduced;
